@@ -27,6 +27,34 @@ public class MemberController extends HttpServlet implements Servlet {
 			MemberJoinAction action = new MemberJoinAction();
 			action.memInsert(request);
 			response.sendRedirect("main.sm");
+		} else if(command.equals("/memList.mem")) {
+			MemberListAction action = new MemberListAction();
+			action.memList(request);
+			response.setCharacterEncoding("utf-8");		// 보낼 때 깨지면 response 받을 때 깨지면 request
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/memberList.jsp");
+			dispatcher.include(request, response);
+		} else if(command.equals("/memInfo.mem")) {
+			MemberInfoAction action = new MemberInfoAction();
+			action.memInfo(request);
+			response.setCharacterEncoding("utf-8");	
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/memberInfo.jsp");
+			dispatcher.forward(request, response);		// 빈 주소라 forward나 include 어떤 거 사용해도 상관 없음
+		} else if(command.equals("/memMod.mem")) {
+			MemberInfoAction action = new MemberInfoAction();
+			action.memInfo(request);
+			RequestDispatcher distpatcher = request.getRequestDispatcher("member/memberModify.jsp");
+			distpatcher.forward(request, response);
+		} else if(command.equals("/memModifyOk.mem")) {
+			MemberModifyAction action = new MemberModifyAction();
+			action.memUpdate(request);
+			response.sendRedirect("memList.mem");
+		} else if(command.equals("/memDel.mem")) {
+			MemberDeleteAction action = new MemberDeleteAction();
+			action.memDel(request);
+			response.sendRedirect("memList.mem");
+		} else if(command.equals("/myPage.mem")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/memMyPage.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 	
