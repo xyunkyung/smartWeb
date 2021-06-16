@@ -55,6 +55,52 @@ public class MemberController extends HttpServlet implements Servlet {
 		} else if(command.equals("/myPage.mem")) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("member/memMyPage.jsp");
 			dispatcher.forward(request, response);
+		} else if(command.equals("/memDetail.mem")) {
+			MemberDetailAction action = new MemberDetailAction();
+			action.memberDetail(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/memDetail.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/memSujung.mem")) {
+			MemberDetailAction action = new MemberDetailAction();
+			action.memberDetail(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/memSujung.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/memSujungOk.mem")) {
+			MemberUpdateAction action = new MemberUpdateAction();
+			int i = action.memberUpdate(request);
+			if(i == 1) {
+				response.sendRedirect("memDetail.mem");
+			} else {
+				response.sendRedirect("memSujung.mem");
+			}
+		} else if(command.equals("/memOut.mem")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/outPw.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/memOutOk.mem")) {
+			MemberOutAction action = new MemberOutAction();
+			int i = action.memOut(request);
+			if(i == 1) {
+				response.sendRedirect("main.sm");
+			} else {
+				response.sendRedirect("memOut.mem");
+			}
+		} else if(command.equals("/memPwChange.mem")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("member/pwChange.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/pwChangeOk.mem")) {
+			MemberPwConfirmAction action = new MemberPwConfirmAction();
+			String path = action.pwConfirm(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+			dispatcher.forward(request, response);
+		} else if(command.equals("/ChangePw.mem")) {
+			MemberPwChangeAction action = new MemberPwChangeAction();
+			int i = action.pwChange(request);
+			if(i == 1) {
+				response.sendRedirect("main.sm");
+			} else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("member/pwChange.jsp");
+				dispatcher.forward(request, response);
+			}
 		}
 	}
 	

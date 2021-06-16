@@ -61,11 +61,13 @@
 </script>
 </head>
 <body>
-<form action="memModifyOk.mem" method="post" name="frm">
-<input type="hidden" name="memId" value="${dto.memId }" />
+<form action="memSujungOk.mem" method="post" name="frm">
  	<table border = 1>
 		<tr><td>아이디</td>
 			<td>${dto.memId }</td></tr>
+		<tr><td>비밀번호</td>
+			<td><input type="password" name="memPw" />
+				<span>${pwFail }</span></td></tr>
 		<tr><td>이름</td>
 			<td>${dto.memName }</td></tr>
 		<tr><td>우편번호</td>
@@ -94,7 +96,6 @@
 		<tr><td colspan="2">
 			<input type="submit" value="수정" />
 			<input type="button" value="수정 취소" onclick="javjascript:history.back();" />
-			<input type="button" value="회원 삭제" onclick="javjascript:location.href='memDel.mem?memId=${dto.memId }'" />
 			</td></tr>
 	</table>
 </form>

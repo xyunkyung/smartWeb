@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sun.rmi.server.Dispatcher;
+
 public class EmployeeController extends HttpServlet
 	implements Servlet{
 	public void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -46,6 +48,55 @@ public class EmployeeController extends HttpServlet
 			EmployeeDeleteAction action = new EmployeeDeleteAction();
 			action.empDelete(request);
 			response.sendRedirect("empList.em");
+		} else if(command.equals("/empMyPage.em")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee/empMyPage.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/empDetail.em")) {
+			EmployeeDetailAction action = new EmployeeDetailAction();
+			action.empDetail(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee/empDetail.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/empSujung.em")) {
+			EmployeeDetailAction action = new EmployeeDetailAction();
+			action.empDetail(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee/empSujung.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/empSujungOk.em")) {
+			EmployeeUpdateAction action = new EmployeeUpdateAction();
+			int i = action.employeeUpdate(request);
+			if(i == 1) {
+				response.sendRedirect("empDetail.em");
+			} else {
+				response.sendRedirect("empSujung.em");
+			}
+		} else if(command.equals("/empPwChange.em")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee/empPwChange.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/pwChangeOk.em")) {
+			EmployeePwConfirmAction action = new EmployeePwConfirmAction();
+			String path = action.empPwConfirm(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher(path);
+			dispatcher.forward(request, response);
+		} else if(command.equals("/empChangePw.em")) {
+			EmployeePwChangeAction action = new EmployeePwChangeAction();
+			int i = action.empPwChange(request);
+			if(i == 1) {
+				response.sendRedirect("main.sm");
+			} else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("employee/empPwChange.jsp");
+				dispatcher.forward(request, response);
+			}
+		} else if(command.equals("/empOut.em")) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("employee/empOutPw.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/empOutOk.em")) {
+			EmployeeOutAction action = new EmployeeOutAction();
+			int i = action.empOut(request);
+			if(i == 1) {
+				response.sendRedirect("main.sm");
+			} else {
+				response.sendRedirect("empOut.em");
+			}
 		}
 	}
 

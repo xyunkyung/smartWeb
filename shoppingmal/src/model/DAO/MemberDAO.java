@@ -45,6 +45,25 @@ public class MemberDAO {
 						catch (SQLException e) {}
 	}
 	
+	public void pwChange(String memId, String memPw) {
+		sql = " UPDATE MEMBER SET MEM_PW = ? WHERE MEM_ID = ? ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memPw);
+			pstmt.setString(2, memId);
+			
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
 	public void memDel(String memId) {
 		sql = "DELETE FROM MEMBER WHERE MEM_ID = ?";
 		

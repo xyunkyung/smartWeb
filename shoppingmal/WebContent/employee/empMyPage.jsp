@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="memDetail.mem">회원 정보 수정</a> | 
-<a href="memPwChange.mem">비밀번호 변경</a> | 
-<a href="memOut.mem">회원 탈퇴</a>
+<a href="empDetail.em">직원 정보 수정</a> |
+<a href="empPwChange.em">비밀번호 변경</a> | 
+<a href="empOut.em">가입 탈퇴</a> 
 </body>
 </html>

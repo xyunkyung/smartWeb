@@ -31,11 +31,11 @@
 	<c:if test="${!empty authInfo }">
 	<!-- 일반 회원 -->
 	<c:if test="${authInfo.grade == 1 }">
-		<a href="myPage.mem">my page</a>
+		<a href="myPage.mem">마이 페이지</a>
 	</c:if>
 	<!-- 직원 -->
 	<c:if test="${authInfo.grade != 1 }">
-	
+		<a href="empMyPage.em">마이 페이지</a>
 	<!-- 관리자 -->
 	<a href="empList.em">직원 리스트</a>
 	<a href="memList.mem">회원 리스트</a>
