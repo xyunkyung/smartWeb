@@ -21,6 +21,24 @@ public class NoticeController extends HttpServlet implements Servlet {
 			action.noticeList(request);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("notice/noticeList.jsp");
 			dispatcher.forward(request, response);
+		} else if(command.equals("/noticeRegest.nc")) {
+			NoticeRegestAction action = new NoticeRegestAction();
+			action.noticeRegest(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("notice/noticeRegest.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/noticeRegestOk.nc")) {
+			NoticeRegestOkAction action = new NoticeRegestOkAction();
+			action.noticeRegestOk(request);
+			response.sendRedirect("noticeList.nc");
+		} else if(command.equals("/noticeDetail.nc")) {
+			NoticeDetailAction action = new NoticeDetailAction();
+			action.noticeDetail(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("notice/noticeDetail.jsp");
+			dispatcher.forward(request, response);
+		} else if(command.equals("/noticeModify.nc")) {
+			NoticeModifyAction action = new NoticeModifyAction();
+			action.noticeModify(request);
+			response.sendRedirect("noticeList.nc");
 		}
 	}
 	@Override

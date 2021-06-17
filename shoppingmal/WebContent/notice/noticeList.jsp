@@ -11,8 +11,8 @@
 공지사항 리스트 페이지입니다.
 <table border=1>
 	<tr><td>게시글 번호</td><td>말머리</td><td>제목</td><td>작성일</td><td>조회수</td></tr>
-	<c:forEach items="${noticeList }" var="dto">
-		<tr><td>${dto.noticeNo }</td>
+	<c:forEach items="${lists }" var="dto">
+		<tr><td><a href="noticeDetail.nc?noticeNo=${dto.noticeNo }">${dto.noticeNo }</a></td>
 			<td>${dto.noticeKind }</td>
 			<td>${dto.noticeSub }</td>
 			<td>${dto.noticeDate }</td>

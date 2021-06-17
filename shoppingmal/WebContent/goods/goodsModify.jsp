@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="goodsModify.gd" name="frm" method="post" > <!-- 파일 날리기 -->
+<form action="goodsModify.gd" name="frm" method="post" > 
 <input type="hidden" name="prodNum" value="${dto.prodNum }" />
 	<table border=1 align="center">
 		<tr><th>상품 번호</th>
