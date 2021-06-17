@@ -35,4 +35,22 @@
   	<servlet-name>member</servlet-name>
   	<url-pattern>*.mem</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>goods</servlet-name>
+  	<servlet-class>controller.goods.GoodsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>goods</servlet-name>
+  	<url-pattern>*.gd</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>notice</servlet-name>
+  	<servlet-class>controller.notice.NoticeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>notice</servlet-name>
+  	<url-pattern>*.nc</url-pattern>
+  </servlet-mapping>
 </web-app>

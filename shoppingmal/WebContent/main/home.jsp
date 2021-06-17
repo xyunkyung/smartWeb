@@ -19,7 +19,7 @@
 				<input type="image" src="images/pngegg.png" width="60" alt="login" />
 			</td></tr>
 		<tr><td>비밀번호</td>
-			<td><input type="password" name="userPw" /><span>${pwFail }</sapn></td></tr>
+			<td><input type="password" name="userPw" /><span>${pwFail }</span></td></tr>
 		<tr><td colspan="3">
 				<a href="#">아이디</a>/<a href="#">비밀번호 찾기</a> | 
 				<a href="memAgree.mem">회원가입</a>
@@ -36,6 +36,8 @@
 	<!-- 직원 -->
 	<c:if test="${authInfo.grade != 1 }">
 		<a href="empMyPage.em">마이 페이지</a>
+		<a href="goodsList.gd">상품 등록</a>
+		<a href="noticeList.nc">공지사항</a>
 	<!-- 관리자 -->
 	<a href="empList.em">직원 리스트</a>
 	<a href="memList.mem">회원 리스트</a>
