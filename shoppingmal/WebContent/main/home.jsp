@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,7 @@
 	<!-- 일반 회원 -->
 	<c:if test="${authInfo.grade == 1 }">
 		<a href="myPage.mem">마이 페이지</a>
+		<a href="goodsCartList.gd">장바구니</a>
 	</c:if>
 	<!-- 직원 -->
 	<c:if test="${authInfo.grade != 1 }">
@@ -44,5 +46,32 @@
 	</c:if>
 	<a href="logout.sm">로그아웃</a>
 	</c:if>
+	<hr />
+	<!-- 상품 리스트 -->
+<script>
+	function goodsBuy(prodNum) {
+		if(${authInfo == null}) {
+			alert("로그인이 되어있지 않습니다.");
+			return false;
+		} else {
+			location.href="prodInfo.gd?prodNum="+prodNum;
+		}
+	}
+</script>
+<table align="center">
+	<tr>
+	<c:forEach items="${lists }" var="dto" varStatus="cnt">
+		<td><a href="javascript:goodsBuy('${dto.prodNum}')" >
+		<img width="300" height="300" src="goods/upload/${dto.prodImage.split(',')[0] }" ><br />
+		${dto.prodName }<br />
+		<fmt:formatNumber value="${dto.prodPrice }" type="currency" /></a></td>
+		<c:if test="${cnt.count % 3 == 0 }">
+		</tr><tr>
+		</c:if>
+	</c:forEach>
+	</tr>
+</table>
+	<!-- 공지사항 -->
+	
 </body>
 </html>

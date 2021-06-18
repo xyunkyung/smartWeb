@@ -2,20 +2,16 @@ package controller.main;
 
 import java.io.IOException;
 
-
-
 import javax.servlet.RequestDispatcher;
-
 import javax.servlet.Servlet;
-
 import javax.servlet.ServletException;
-
 import javax.servlet.http.HttpServlet;
-
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import controller.goods.GoodsListAction;
+import controller.goods.GoodsModifyAction;
 
 
 public class MainController extends HttpServlet 
@@ -29,6 +25,8 @@ public class MainController extends HttpServlet
 		/// context = /shopping
 		///           123456789
 		if(command.equals("/main.sm")) {
+			GoodsListAction action = new GoodsListAction();
+			action.goodsList(request);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("main/home.jsp");
 			dispatcher.forward(request, response);
 		} else if(command.equals("/login.sm")) {
@@ -39,7 +37,7 @@ public class MainController extends HttpServlet
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect("main.sm");
-		}
+		} 
 	}
 
 	@Override
