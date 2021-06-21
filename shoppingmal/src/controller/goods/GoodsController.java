@@ -59,6 +59,19 @@ public class GoodsController extends HttpServlet implements Servlet {
 			cartList.cartList(request);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("goods/goodsCart.jsp");
 			dispatcher.forward(request, response);
+		} else if(command.equals("/goodsCartQtyDown.gd")) {
+			GoodsCartQtyDownAction action = new GoodsCartQtyDownAction();
+			action.cartQtyDown(request);
+			response.sendRedirect("goodsCartList.gd");
+		} else if(command.equals("/cartProdDel.gd")) {
+			GoodsCartProdDelAction action = new GoodsCartProdDelAction();
+			action.cartProdDel(request);
+			response.sendRedirect("goodsCartList.gd");
+		} else if(command.equals("/goodsBuy.gd")) {
+			GoodsBuyAction action = new GoodsBuyAction();
+			action.goodsBuy(request);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("goods/order.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 	
