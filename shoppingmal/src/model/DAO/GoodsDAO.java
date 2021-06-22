@@ -7,10 +7,152 @@ import java.util.List;
 import model.DTO.CartDTO;
 import model.DTO.GoodsCartDTO;
 import model.DTO.GoodsDTO;
+import model.DTO.OrderList;
+import model.DTO.PaymentDTO;
+import model.DTO.PurchaseDTO;
 
 public class GoodsDAO extends DataBaseInfo {
 
 	final String COLUMNS = "PROD_NUM, PROD_NAME, PROD_PRICE, PROD_IMAGE, PROD_DETAIL, RPOD_CAPACITY, PROD_SUPPLYER, PROD_DEL_FEE, RECOMMEND, EMPLOYEE_ID, CTGR ";
+	
+	public void payment(PaymentDTO dto) {
+		String num = " select to_char(sysdate,'yyyymmdd') || nvl2(max(PAYMENT_APPR_NUM),substr(max(PAYMENT_APPR_NUM),-6),100000)+1 from payment " + 
+				" where substr(PAYMENT_APPR_NUM,1,8)=to_char(sysdate,'yyyymmdd') ";
+		
+		sql = " INSERT INTO PAYMENT(PURCHASE_NUM, PAYMENT_METHOD, PAYMENT_APPR_PRICE, PAYMENT_APPR_NUM, PAYMENT_APPR_DATE, PAYMENT_NUMBER) "
+				+ " VALUES (?, ?, ?, ( " + num 
+				+ " ), sysdate, ? ) ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getPurchaseNum());
+			pstmt.setString(2, dto.getPaymentMethod());
+			pstmt.setString(3, dto.getPaymentApprPrice());
+			pstmt.setString(4, dto.getPaymentNumber());
+			
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 저장되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		
+		
+	}
+	
+	public List<OrderList> orderList(String memId) {
+		List<OrderList> list = new ArrayList<OrderList>();
+		
+		sql = " SELECT p2.PURCHASE_DATE, p4.PAYMENT_APPR_NUM, p1.PROD_NUM, p2.PURCHASE_NUM, p1.PROD_NAME, p1.PROD_SUPPLYER, p2.PURCHASE_TOT_PRICE, p1.PROD_IMAGE "
+				+ " FROM PRODUCTS p1, PURCHASE p2, PURCHASE_LIST p3, PAYMENT p4 "
+				+ " WHERE p2.PURCHASE_NUM = p3.PURCHASE_NUM "
+				+ " AND p1.PROD_NUM = p3.PROD_NUM "
+				+ " AND p2.PURCHASE_NUM = p4.PURCHASE_NUM(+) "
+				+ " AND p2.MEM_ID = ? "
+				+ " ORDER BY PURCHASE_NUM DESC ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memId);
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				OrderList dto = new OrderList();
+				dto.setPaymentApprNum(rs.getString("PAYMENT_APPR_NUM"));
+				dto.setProdImage(rs.getString("PROD_NUM"));
+				dto.setProdName(rs.getString("PROD_NAME"));
+				dto.setProdNum(rs.getString("PROD_NUM"));
+				dto.setProdSupplyer(rs.getString("PROD_SUPPLYER"));
+				dto.setPurchaseDate(rs.getString("PURCHASE_DATE"));
+				dto.setPurchaseTotPrice(rs.getString("PURCHASE_TOT_PRICE"));
+				dto.setPurchaseNum(rs.getString("PURCHASE_NUM"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
+	
+	public void cartDel(String prodNum, String memId) {
+		sql = " DELETE FROM CART "
+				+ " WHERE MEM_ID = ? AND PROD_NUM = ? ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memId);
+			pstmt.setString(2, prodNum);
+			
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+	
+	public void purchaseListInsert(String purchaseNum, String prodNum, String memId) {
+		sql = " INSERT INTO PURCHASE_LIST (PURCHASE_NUM, PROD_NUM, PURCHASE_QTY, PURCHASE_PRICE) "
+				+ " SELECT ?, PROD_NUM, CART_QTY, CART_PRICE "
+				+ " FROM CART "
+				+ " WHERE PROD_NUM = ? AND MEM_ID = ? ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, purchaseNum);
+			pstmt.setString(2, prodNum);
+			pstmt.setString(3, memId);
+			
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 입력되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+	}
+	
+	public void purchaseInsert(PurchaseDTO dto) {
+		sql = " INSERT INTO PURCHASE (PURCHASE_NUM, MEM_ID, PURCHASE_TOT_PRICE, "
+				+ "PURCHASE_ADDR, PURCHASE_METHOD, PURCHASE_REQUEST, RECEIVER_NAME, "
+				+ "RECEIVER_PHONE , PURCHASE_DATE) "
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, SYSDATE) ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getPurchaseNum());
+			pstmt.setString(2, dto.getMemId());
+			pstmt.setString(3, dto.getPurchaseTotPrice());
+			pstmt.setString(4, dto.getPurchaseAddr());
+			pstmt.setString(5, dto.getPurchaseMethod());
+			pstmt.setString(6, dto.getPurchaseRequest());
+			pstmt.setString(7, dto.getReceiverName());
+			pstmt.setString(8, dto.getReceiverPhone());
+			
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 입력되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
 	
 	public GoodsCartDTO prodCart(String prodNum, String memId) {
 		GoodsCartDTO dto = null;

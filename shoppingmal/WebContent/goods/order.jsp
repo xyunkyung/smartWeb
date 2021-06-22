@@ -11,7 +11,7 @@
 주문서
 <hr />
 1. 주문 상품<br />
-<form action="#" method="post">
+<form action="goodsOrder.gd" method="post">
 <table border=1 width="600">
 	<tr><td colspan="2">상품정보</td>
 		<td>적용 금액</td><td>판매자</td><td>배송비</td></tr>
@@ -37,16 +37,16 @@
 	<tr><td>상품 금액<br />${cartPrice }</td>
 		<td>+</td><td>배송비<br />${prodDelFee }</td>
 		<td>=</td><td>최종 결제 금액<br />${cartPrice + prodDelFee }
-		<input type="hidden" name="purchaseTotPrice" value="" />
+		<input type="hidden" name="purchaseTotPrice" value="${cartPrice + prodDelFee }" />
 		<input type="hidden" name="prodNums" value="${prodNums }" /></td></tr>
 </table>
 <table>
 	<tr><td>이름</td>
-		<td><input type="text" name="receiveName"></td></tr>
+		<td><input type="text" name="receiverName"></td></tr>
 	<tr><td>주소</td>
 		<td><input type="text" name="purchaseAddr"></td></tr>
 	<tr><td>연락처</td>
-		<td><input type="text" name="purchasePhone"></td></tr>
+		<td><input type="text" name="receiverPhone"></td></tr>
 	<tr><td>주문 메세지</td>
 		<td><input type="text" name="purchaseRequest"></td></tr>
 	<tr><td>결제 방법</td>

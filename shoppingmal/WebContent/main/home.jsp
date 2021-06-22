@@ -34,6 +34,7 @@
 	<c:if test="${authInfo.grade == 1 }">
 		<a href="myPage.mem">마이 페이지</a>
 		<a href="goodsCartList.gd">장바구니</a>
+		<a href="purchaseCon.gd">주문 확인</a>
 	</c:if>
 	<!-- 직원 -->
 	<c:if test="${authInfo.grade != 1 }">
