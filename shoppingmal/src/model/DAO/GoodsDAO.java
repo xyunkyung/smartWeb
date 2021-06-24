@@ -20,9 +20,9 @@ public class GoodsDAO extends DataBaseInfo {
 	public List<ProdReviewDTO> prodReviewSelect(String prodNum) {
 		List<ProdReviewDTO> list = new ArrayList<ProdReviewDTO>();
 		
-		sql = " SELECT RPAD(SUBSTR(m.MEM_ID, 1, 3), LENGTH(m.MEM_ID), '*') MEM_ID, REVIEW_CONTENT, REVIEW_IMG, REVIEW_DATE "
+		sql = " SELECT RPAD(SUBSTR(p.MEM_ID, 1, 3), LENGTH(p.MEM_ID), '*') MEM_ID, REVIEW_CONTENT, REVIEW_IMG, REVIEW_DATE "
 				+ " FROM MEMBER m, PURCHASE p, REVIEW r "
-				+ " WHERE m.MEM_ID = p.MEM_ID AND p.PURCHASE_NUM = r.PURCHASE_NUM "
+				+ " WHERE p.PURCHASE_NUM = r.PURCHASE_NUM "
 				+ " AND r.PROD_NUM = ? ";
 		
 		getConnect();

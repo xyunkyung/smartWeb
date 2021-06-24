@@ -32,5 +32,6 @@
 	<tr><td>결제금액 : ${dto.purchaseTotPrice }</td></tr>
 </c:forEach>
 </table>
+<a href="main.sm">홈으로</a>
 </body>
 </html>

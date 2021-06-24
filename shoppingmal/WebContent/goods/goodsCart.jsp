@@ -34,7 +34,7 @@ function prodChk() {
 </script>
 </head>
 <body>
-장바구니 페이지입니다.
+장바구니 페이지입니다.<br />
 <table border=1 width=800 align="center">
 <form action="goodsBuy.gd" method="post">
 <c:set var="price" value="0" /> <!-- 자바 변수 생성 --> 
@@ -58,11 +58,13 @@ function prodChk() {
 <c:set var="cnt" value="${cnt = cnt + 1 }" />
 <c:set var="price" value="${dto.cartDTO.cartPrice + dto.goodsDTO.prodDelFee + price }" />
 </c:forEach>
-<span id="prodCnt">${cnt }</span>개의 상품이 선택 되었습니다.
+<span id="prodCnt">${cnt }</span>개의 상품이 선택 되었습니다.&nbsp;
 총 금액 : <span id="totalPrice">${price }</span>
 
-<input type="submit" value="구매하기" />
+
 </form>
 </table>
+<input type="submit" value="구매하기" />
+<input type="button" value="이전" onclick="location:history.back();" />
 </body>
 </html>

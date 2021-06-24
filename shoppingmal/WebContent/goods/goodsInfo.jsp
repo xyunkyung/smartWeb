@@ -58,7 +58,10 @@ ${dto.ctgr }의 ${dto.prodName } 상품 상세 페이지 입니다.
 리뷰
 <hr />
 <c:forEach items="${list }" var="dto">
-	${dto.memId } / ${dto.reviewDate }<br />
+	<p>
+	<c:if test="${dto.memId == null }">일반 사용자</c:if>
+	<c:if test="${dto.memId != null }">${dto.memId }</c:if>
+	/ ${dto.reviewDate }<br />
 	${fn:replace(dto.reviewContent, br, "<br />") }<br />
 	<c:if test="${dto.reviewImg != null }">
 		<img src="goods/review/${dto.reviewImg }" />

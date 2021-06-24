@@ -53,4 +53,13 @@
   	<servlet-name>notice</servlet-name>
   	<url-pattern>*.nc</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>venta</servlet-name>
+  	<servlet-class>controller.venta.VentaController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>venta</servlet-name>
+  	<url-pattern>*.vnt</url-pattern>
+  </servlet-mapping>
 </web-app>
