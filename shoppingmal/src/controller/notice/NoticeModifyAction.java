@@ -16,7 +16,8 @@ public class NoticeModifyAction {
 			e.printStackTrace();
 		}
 		NoticeDTO dto = new NoticeDTO();
-		
+
+		dto.setNoticeNo(request.getParameter("noticeNo"));
 		dto.setNoticeCon(request.getParameter("noticeCon"));
 		dto.setNoticeSub(request.getParameter("noticeSub"));
 		

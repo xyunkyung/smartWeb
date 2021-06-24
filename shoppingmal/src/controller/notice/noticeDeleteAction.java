@@ -18,7 +18,7 @@ public class noticeDeleteAction {
 		String realPath = request.getServletContext().getRealPath(filePath);
 		
 		String fileName = dto.getNoticeFile();
-		if(fileName.length() > 0) {
+		if(fileName != null ) {
 			String path = realPath + "/" + fileName;
 			File f = new File(path);
 			if(f.exists()) f.delete();
