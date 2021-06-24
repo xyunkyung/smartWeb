@@ -18,7 +18,6 @@ public class NoticeModifyAction {
 		NoticeDTO dto = new NoticeDTO();
 		
 		dto.setNoticeCon(request.getParameter("noticeCon"));
-		dto.setNoticeFile(request.getParameter("noticeFile"));
 		dto.setNoticeSub(request.getParameter("noticeSub"));
 		
 		NoticeDAO dao = new NoticeDAO();

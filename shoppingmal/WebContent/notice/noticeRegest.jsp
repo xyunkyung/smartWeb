@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="noticeRegestOk.nc" method="get" name="frm" enctype="multipart/form-data">
+<form action="noticeRegestOk.nc" method="post" name="frm" enctype="multipart/form-data">
 <table border="1" align="center">
 	<tr><td>게시글 번호</td>
 		<td><input type="text" name="noticeNo" value="${noticeNo }" /></td></tr>
@@ -27,7 +27,7 @@
 	<tr><td>조회수</td>
 		<td><input type="number" name="noticeCount" /></td></tr>
 	<tr><td>작성자</td>
-		<td><input type="text" name="employeeId" value="${empId }" /></td></tr>
+		<td>${empId }</td></tr>
 	<tr><th colspan="2">
 			<input type="submit" value="공지사항 등록" />
 			<input type="button" value="취소" onclick="javascript:history.back();" />

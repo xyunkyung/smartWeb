@@ -462,8 +462,7 @@ public class GoodsDAO extends DataBaseInfo {
 				+ " WHEN 'food' THEN '음식' " 
 				+ " WHEN 'car' THEN '자동차 용품' END CTGR1 " + " FROM PRODUCTS "
 				+ " WHERE PROD_NUM = ?";
-		System.out.println(sql);
-		System.out.println(prodNum);
+		
 		getConnect();
 		
 		try {

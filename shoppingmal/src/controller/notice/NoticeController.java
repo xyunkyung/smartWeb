@@ -39,6 +39,10 @@ public class NoticeController extends HttpServlet implements Servlet {
 			NoticeModifyAction action = new NoticeModifyAction();
 			action.noticeModify(request);
 			response.sendRedirect("noticeList.nc");
+		} else if(command.equals("/noticeDel.nc")) {
+			noticeDeleteAction action = new noticeDeleteAction();
+			action.noticeDelete(request);
+			response.sendRedirect("noticeList.nc");
 		}
 	}
 	@Override

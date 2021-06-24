@@ -17,7 +17,6 @@ public class GoodsJoinAction {
 	public void goodsJoin(HttpServletRequest request) {
 		String filePath = "goods/upload";
 		String realPath = request.getServletContext().getRealPath(filePath);
-		System.out.println(realPath);
 		
 		int fileSize = 1024*1024*5;
 		MultipartRequest multi = null;

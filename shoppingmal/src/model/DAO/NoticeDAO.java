@@ -12,8 +12,26 @@ public class NoticeDAO extends DataBaseInfo {
 	
 	final String COLUMNS = " NOTICE_NO, NOTICE_SUB, NOTICE_CON, NOTICE_DATE, NOTICE_KIND, NOTICE_FILE, NOTICE_COUNT, EMPLOYEE_ID ";
 	
+	public void goodsDelete(String noticeNo) {
+		sql = " DELETE FROM NOTICE WHERE NOTICE_NO = ? ";
+	
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, noticeNo);
+			
+			int i = pstmt.executeUpdate();
+			System.out.println(i + "개가 삭제되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+	}
 	public void noticeModify(NoticeDTO dto) {
-		sql = " UPDATE NOTICE SET NOTICE_SUB = ?, NOTICE_CON = ?, NOTICE_FILE = ? "
+		sql = " UPDATE NOTICE SET NOTICE_SUB = ?, NOTICE_CON = ? "
 				+ " WHERE NOTICE_NO = ? ";
 		
 		getConnect();
@@ -22,8 +40,7 @@ public class NoticeDAO extends DataBaseInfo {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, dto.getNoticeSub());
 			pstmt.setString(2, dto.getNoticeCon());
-			pstmt.setString(3, dto.getNoticeFile());
-			pstmt.setString(4, dto.getNoticeNo());
+			pstmt.setString(3, dto.getNoticeNo());
 			
 			int i = pstmt.executeUpdate();
 			System.out.println(i + "개가 수정되었습니다.");
@@ -39,7 +56,7 @@ public class NoticeDAO extends DataBaseInfo {
 		NoticeDTO dto = null;
 		
 		sql = " SELECT " + COLUMNS + " , CASE NOTICE_KIND WHEN 'guidance' THEN '안내' "
-				+ " WHEN 'check' THEN '점검' END noticeKind " + " FROM NOTICE "
+				+ " WHEN 'check' THEN '점검' END noticeKind1 " + " FROM NOTICE "
 				+ " WHERE NOTICE_NO = ? ";
 		
 		getConnect();
@@ -55,7 +72,7 @@ public class NoticeDAO extends DataBaseInfo {
 				dto.setNoticeCount(rs.getString("NOTICE_COUNT"));
 				dto.setNoticeDate(rs.getString("NOTICE_DATE"));
 				dto.setNoticeFile(rs.getString("NOTICE_FILE"));
-				dto.setNoticeKind(rs.getString("noticeKind"));
+				dto.setNoticeKind(rs.getString("noticeKind1"));
 				dto.setNoticeNo(rs.getString("NOTICE_NO"));
 				dto.setNoticeSub(rs.getString("NOTICE_SUB"));
 			}
@@ -94,8 +111,9 @@ public class NoticeDAO extends DataBaseInfo {
 		
 	}
 	
-	public int getNoticeNum() {
-		sql = " SELECT NVL(MAX(NOTICE_NO), 10000) + 1 FROM NOTICE ";
+	public String getNoticeNum() {
+		String noticeNo = null;
+		sql = " SELECT NOTICE_SEQ.NEXTVAL FROM DUAL ";
 		
 		getConnect();
 		
@@ -103,19 +121,20 @@ public class NoticeDAO extends DataBaseInfo {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			rs.next();
-			result = rs.getInt(1);
+			noticeNo = rs.getString(1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return result;
+		return noticeNo;
 	}
 	
 	public List<NoticeDTO> noticeList() {
 		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
 		
-		sql = " SELECT " + COLUMNS + " FROM NOTICE ";
+		sql = " SELECT " + COLUMNS + " , CASE NOTICE_KIND WHEN 'guidance' THEN '안내' "
+				+ " WHEN 'check' THEN '점검' END noticeKind1 " + " FROM NOTICE ";
 		
 		getConnect();
 		
@@ -129,7 +148,7 @@ public class NoticeDAO extends DataBaseInfo {
 				dto.setNoticeCount(rs.getString("NOTICE_COUNT"));
 				dto.setNoticeDate(rs.getString("NOTICE_DATE"));
 				dto.setNoticeFile(rs.getString("NOTICE_FILE"));
-				dto.setNoticeKind(rs.getString("NOTICE_KIND"));
+				dto.setNoticeKind(rs.getString("noticeKind1"));
 				dto.setNoticeNo(rs.getString("NOTICE_NO"));
 				dto.setNoticeSub(rs.getString("NOTICE_SUB"));
 				

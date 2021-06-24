@@ -21,13 +21,14 @@
 	<tr><td>작성일</td>
 		<td>${dto.noticeDate }</td></tr>
 	<tr><td>파일 첨부</td>
-		<td><input type="file" name="noticeFile" value="${dto.noticeFile }" /></td></tr>
+		<td>${dto.noticeFile }</td></tr>
 	<tr><td>조회수</td>
 		<td>${dto.noticeCount }</td></tr>
 	<tr><td>작성자</td>
 		<td>${dto.employeeId }</td></tr>
 	<tr><th colspan="2">
 			<input type="submit" value="공지사항 수정" />
+			<input type="button" value="공지사항 삭제" onclick="javascript:location.href='noticeDel.nc?noticeNo=${dto.noticeNo }'" />
 			<input type="button" value="취소" onclick="javascript:history.back();" />
 			<input type="button" value="홈으로" onclick="javascript:location.href='main.sm'" />
 			</th></tr>

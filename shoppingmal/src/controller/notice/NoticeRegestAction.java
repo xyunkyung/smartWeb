@@ -10,12 +10,7 @@ public class NoticeRegestAction {
 
 	public void noticeRegest(HttpServletRequest request) {
 		NoticeDAO dao = new NoticeDAO();
-		int noticeNo = dao.getNoticeNum();
+		String noticeNo = dao.getNoticeNum();
 		request.setAttribute("noticeNo", noticeNo);
-		
-	    HttpSession session=request.getSession();
-	      AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
-	      String empId=authInfo.getGrade();
-	      request.setAttribute("empId", empId);
 	}
 }
