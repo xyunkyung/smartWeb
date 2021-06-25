@@ -144,9 +144,6 @@ public class GoodsDAO extends DataBaseInfo {
 		} finally {
 			close();
 		}
-		
-		
-		
 	}
 	
 	public List<OrderList> orderList(String memId) {
@@ -182,6 +179,7 @@ public class GoodsDAO extends DataBaseInfo {
 				dto.setPurchaseTotPrice(rs.getString("PURCHASE_TOT_PRICE"));
 				dto.setPurchaseNum(rs.getString("PURCHASE_NUM"));
 				dto.setReviewContent(rs.getString("REVIEW_CONTENT"));
+				dto.setProdImage(rs.getString("PROD_IMAGE"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {

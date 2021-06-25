@@ -24,9 +24,11 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
   
   <!-- Top header -->
   <header class="w3-container w3-xlarge">
-    <p class="w3-left">Another Hyun</p>
+    <a href="main.sm"><p class="w3-left">Another Hyun</p></a>
     <p class="w3-right">
-      <i class="fa fa-shopping-cart w3-margin-right"></i>
+    <a href="goodsCartList.gd">
+      <i class="fa fa-shopping-cart w3-margin-right">
+      </i></a>
       <i class="fa fa-search"></i>
     </p>
   </header>
@@ -34,28 +36,22 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script>
+	function goodsBuy(prodNum) {
+		if(${authInfo == null }) {
+			alert("로그인이 되어있지 않습니다.");
+			return false;
+		} else {
+			location.href="prodInfo.gd?prodNum="+prodNum;
+		}
+	}
+</script>
 </head>
 <body>
 	<!-- 로그인 안되어있을 때 -->
 	<c:if test="${empty authInfo }">
-	<!-- Footer -->
-  <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
-    <div class="w3-row-padding">
-      <div class="w3-col s4">
-        <h4>Contact</h4>
-        <p>Questions? Go ahead.</p>
-        <form action="/action_page.php" target="_blank">
-          <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Name" required></p>
-          <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
-          <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Subject" required></p>
-          <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Message" required></p>
-          <button type="submit" class="w3-button w3-block w3-black">Send</button>
-        </form>
-      </div>
-      </div>
-      </footer>
 	<form action="login.sm" method="post" name=frm>
-	<table border = "1">
+	<table align="center">
 		<tr><td colspan="3">
 			<input type="checkbox" name="idStore" value="store" 
 				<c:if test="${isId != null }">checked</c:if>
@@ -76,6 +72,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	</table>
 	</form>
 	</c:if>
+
 	<!--  로그인 되어있을 때 -->
 	<c:if test="${!empty authInfo }">
 	<!-- 일반 회원 -->
@@ -117,16 +114,8 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	</c:if>
 	<hr />
 	<!-- 상품 리스트 -->
-<script>
-	function goodsBuy(prodNum) {
-		if(${authInfo == null}) {
-			alert("로그인이 되어있지 않습니다.");
-			return false;
-		} else {
-			location.href="prodInfo.gd?prodNum="+prodNum;
-		}
-	}
-</script>
+
+<div class="w3-main" style="margin-left:250px">
 <table align="center">
 	<tr>
 	<c:forEach items="${lists }" var="dto" varStatus="cnt">
@@ -140,7 +129,6 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	</c:forEach>
 	</tr>
 </table>
-	<!-- 공지사항 -->
-	
+</div>
 </body>
 </html>

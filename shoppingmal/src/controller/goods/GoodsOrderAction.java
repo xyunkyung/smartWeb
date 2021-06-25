@@ -1,5 +1,6 @@
 package controller.goods;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,6 +14,12 @@ import model.DTO.PurchaseDTO;
 public class GoodsOrderAction {
 
 	public String goodsOrder(HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		AuthInfo authInfo = (AuthInfo)session.getAttribute("authInfo");
 		String memId = authInfo.getUserId();
