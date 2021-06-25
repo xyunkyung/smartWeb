@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,9 +32,14 @@ public class MainController extends HttpServlet
 			dispatcher.forward(request, response);
 		} else if(command.equals("/login.sm")) {
 			LoginAction action = new LoginAction();
-			action.login(request);
+			action.login(request, response);
 			response.sendRedirect("main.sm");
 		} else if(command.equals("/logout.sm")) {
+			Cookie cookie = new Cookie("autoLogin", "");
+			cookie.setPath("/");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
+			
 			HttpSession session = request.getSession();
 			session.invalidate();
 			response.sendRedirect("main.sm");

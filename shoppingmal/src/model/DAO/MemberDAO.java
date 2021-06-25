@@ -27,6 +27,31 @@ public class MemberDAO {
 		jdbcUrl = "jdbc:oracle:thin:@localhost:1521:xe";
 	}
 	
+	public void idFind(MemberDTO dto) {
+		sql = " SELECT MEM_ID, MEM_NAME FROM MEMBER "
+				+ " WHERE MEM_NAME = ? AND MEM_PHONE = ? AND MEM_EMAIL = ? ";
+		
+		getConnect();
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getMemName());
+			pstmt.setString(2, dto.getMemPhone());
+			pstmt.setString(3, dto.getMemEmail());
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				dto.setMemId(rs.getString("MEM_ID"));
+				dto.setMemName(rs.getString("MEM_NAME"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+	}
+	
 	public static void getConnect() {
 		try {
 			Class.forName(jdbcDriver);

@@ -1,12 +1,14 @@
 package model.DTO;
 
+import java.util.Date;
+
 public class DeliveryDTO {
 
 	String purchaseNum;
 	String deliveryCom;
 	String deliveryNum;
-	String deliveryExpDate;
-	String arrivalExpDate;
+	Date deliveryExpDate;
+	Date arrivalExpDate;
 	String deliveryDelFee;
 	
 	public String getPurchaseNum() {
@@ -27,16 +29,16 @@ public class DeliveryDTO {
 	public void setDeliveryNum(String deliveryNum) {
 		this.deliveryNum = deliveryNum;
 	}
-	public String getDeliveryExpDate() {
+	public Date getDeliveryExpDate() {
 		return deliveryExpDate;
 	}
-	public void setDeliveryExpDate(String deliveryExpDate) {
+	public void setDeliveryExpDate(Date deliveryExpDate) {
 		this.deliveryExpDate = deliveryExpDate;
 	}
-	public String getArrivalExpDate() {
+	public Date getArrivalExpDate() {
 		return arrivalExpDate;
 	}
-	public void setArrivalExpDate(String arrivalExpDate) {
+	public void setArrivalExpDate(Date arrivalExpDate) {
 		this.arrivalExpDate = arrivalExpDate;
 	}
 	public String getDeliveryDelFee() {

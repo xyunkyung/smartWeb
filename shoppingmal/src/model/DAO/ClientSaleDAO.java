@@ -1,5 +1,6 @@
 package model.DAO;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,13 +33,15 @@ public class ClientSaleDAO extends DataBaseInfo {
 			pstmt.setString(1, dto.getPurchaseNum());
 			pstmt.setString(2, dto.getDeliveryCom());
 			pstmt.setString(3, dto.getDeliveryNum());
-			pstmt.setString(4, dto.getDeliveryExpDate());
-			pstmt.setString(5, dto.getArrivalExpDate());
+			long deliveryExpDate = dto.getDeliveryExpDate().getTime();
+			pstmt.setDate(4, new Date(deliveryExpDate));
+			long arrivalExpDate = dto.getArrivalExpDate().getTime();
+			pstmt.setDate(5, new Date(arrivalExpDate));
 			pstmt.setString(6, dto.getPurchaseNum());
 			pstmt.setString(7, dto.getDeliveryCom());
 			pstmt.setString(8, dto.getDeliveryNum());
-			pstmt.setString(9, dto.getDeliveryExpDate());
-			pstmt.setString(10, dto.getArrivalExpDate());
+			pstmt.setDate(9, new Date(deliveryExpDate));
+			pstmt.setDate(10, new Date(arrivalExpDate));
 			pstmt.setString(11, dto.getPurchaseNum());
 			pstmt.setString(12, dto.getPurchaseNum());
 			
@@ -67,10 +70,10 @@ public class ClientSaleDAO extends DataBaseInfo {
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				dto = new DeliveryDTO();
-				dto.setArrivalExpDate(rs.getString("ARRIVAL_EXP_DATE"));
+				dto.setArrivalExpDate(rs.getDate("ARRIVAL_EXP_DATE"));
 				dto.setDeliveryCom(rs.getString("DELIVERY_COM"));
 				dto.setDeliveryDelFee(rs.getString("DELIVERY_DEL_FREE"));
-				dto.setDeliveryExpDate(rs.getString("DELIVERY_EXP_DATE"));
+				dto.setDeliveryExpDate(rs.getDate("DELIVERY_EXP_DATE"));
 				dto.setDeliveryNum(rs.getString("DELIVERY_NUM"));
 				dto.setPurchaseNum(rs.getString("PURCHASE_NUM"));
 			}
