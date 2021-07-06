@@ -2,7 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mappers.employeeMapper">
+<sql id="baseColumn">
+	EMPLOYEE_ID employeeId, EMP_USERID empUserid, EMP_PW empPw, EMP_NAME empName, HIRE_DATE hireDate, JOB_ID jobId, PH_NUMBER phNumber, OFFICE_NUMBER officeNumber, EMAIL email, EMP_ADDRESS empAddress 
+</sql>
 <select id="empNo" resultType="string">
 	SELECT NVL(MAX(EMPLOYEE_ID), 0) + 1 FROM EMPLOYEES
 </select>
+<select id="empInsert" parameterType="Model.EmployeeDTO">
+	INSERT INTO EMPLOYEES(EMPLOYEE_ID, EMP_USERID, EMP_PW, EMP_NAME, HIRE_DATE, JOB_ID, PH_NUMBER, OFFICE_NUMBER, EMAIL, EMP_ADDRESS)
+	VALUES(#{employeeId}, #{empUserid}, #{empPw}, #{empName}, #{hireDate}, #{jobId}, #{phNumber}, #{officeNumber}, #{email}, #{empAddress})
+</select>
+<select id="empList" resultType="Model.EmployeeDTO">
+	SELECT EMPLOYEE_ID employeeId, EMP_USERID empUserid, EMP_PW empPw, EMP_NAME empName, HIRE_DATE hireDate, JOB_ID jobId, PH_NUMBER phNumber, OFFICE_NUMBER officeNumber, EMAIL email, EMP_ADDRESS empAddress 
+	FROM EMPLOYEES
+	ORDER BY EMPLOYEE_ID
+</select>
+<select id="empInfo" parameterType="string" resultType="Model.EmployeeDTO">
+	SELECT <include refid="baseColumn" />
+	FROM EMPLOYEES
+	WHERE EMPLOYEE_ID = #{empId}
+</select>
+<update id="empUpdate" parameterType="Model.EmployeeDTO">
+	UPDATE EMPLOYEES
+	SET JOB_ID = #{jobId}, PH_NUMBER = #{phNumber}, OFFICE_NUMBER = #{officeNumber}, 
+	EMAIL = #{email}, EMP_ADDRESS = #{empAddress}
+	WHERE EMPLOYEE_ID = #{employeeId}
+</update>
+<delete id="empDelete" parameterType="string">
+	DELETE FROM EMPLOYEES
+	WHERE EMPLOYEE_ID = #{employeeId}
+</delete>
 </mapper>
