@@ -24,35 +24,44 @@ table{
 
 </style>
 <body>
+<!-- 로그인 안된 경우 -->
 <c:if test="${empty authInfo }">
-<!-- 로그인이 안된 경우 -->
-<form:form action="login" method="post" name="frm" modelAttribute="loginCommand">
+<form:form action="login" method="post" name="frm" 
+	modelAttribute="logInCommand">
 <table>
-	<tr><td colspan="3">아이디 저장 | 자동 로그인</td></tr>
+	<tr><td colspan="3">아이디저장 | 자동로그인</td></tr>
 	<tr><td>아이디</td>
 		<td><form:input path="userId" />
-			<form:errors path="userId" /></td>
+			<form:errors path="userId"  /> </td>
 		<td rowspan="2">
-		<input type="image" src="images/img1.jpg" width="100" alt="login"/></td></tr>
+		<input type="image" src="images/img1.jpg" width="100" alt="login"/>
+ 		</td></tr>
 	<tr><td>비밀번호</td>
-		<td><form:password path="userPw" />
-			<form:errors path="userPw" /></td></tr>
-	<tr><td colspan="3">아이디/비밀번호 찾기 | <a href="register/agree">회원 가입</a></td></tr>
+		<td>
+			<form:password path="userPw"/>
+			<form:errors path="userPw"  />
+		</td></tr>
+	<tr><td colspan="3">
+		아이디/비밀번호 찾기 | 
+		<a href="register/agree">회원 가입</a>
+		</td></tr>
 </table>
 </form:form>
 </c:if>
-<!-- 로그인이 되었을 때 -->
+
 <c:if test="${!empty authInfo }">
-	<!-- 일반 사용자 -->
+	<!-- 로그인 되었을 때 -->
 	<c:if test="${authInfo.grade == 1 }">
-	<a href="edit/myPage">마이 페이지</a>
+	<!-- 일반 사용자 -->
+		<a href="edit/myPage">마이페이지</a>
 	</c:if>
-	<!-- 관리자 -->
 	<c:if test="${authInfo.grade != 1 }">
+	<!-- 관리자 -->
+	마이페이지
 	<a href="member/memList" >회원리스트</a>
-	<a href="emp/empList">직원리스트</a>
+	<a href="emp/empList">직원 리스트</a>
 	</c:if>
-	<a href="login/logOut">로그아웃</a>
+	<a href="login/logOut">logOut</a>
 </c:if>
 </body>
 </html>

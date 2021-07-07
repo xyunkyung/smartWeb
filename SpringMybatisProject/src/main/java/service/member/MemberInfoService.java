@@ -14,10 +14,10 @@ public class MemberInfoService {
 	MemberRepository memberRepository;
 	
 	public void memInfo(Model model, HttpSession session) {
-		AuthInfoDTO authInfo = 
-				(AuthInfoDTO)session.getAttribute("authInfo");
+		// 로그인 했을 때 session에 저장
+		AuthInfoDTO authInfo = (AuthInfoDTO)session.getAttribute("authInfo");
 		String memId = authInfo.getUserId();
 		MemberDTO dto = memberRepository.memInfo(memId);
-		model.addAttribute("dto", dto);
+		model.addAttribute("memberCommand", dto);
 	}
 }

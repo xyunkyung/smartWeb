@@ -21,7 +21,7 @@
 </select>
 <update id="memUpdate" parameterType="Model.MemberDTO">
 	UPDATE MEMBER
-	SET POST_NUMBER = #{postNumber}, MAM_ADDRESS= #{memAddress}, DETAIL_ADD = #{detailAdd}, MEM_EMAIL = #{memEmail} , MEM_EMAIL_CK = #{memEmailCk} , MEM_PHONE = #{memPhone}, MEM_ACCOUNT = #{memAccount}
+	SET POST_NUMBER = #{postNumber}, MAM_ADDRESS= #{memAddress}, DETAIL_ADD = #{detailAdd}, MEM_EMAIL = #{memEmail} , MEM_EMAIL_CK = #{memEmailCk} , MEM_PHONE = #{memPhone}, MEM_ACCOUNT = <if test="memAccount == null">null</if><if test="memAccount != null">#{memAccount}</if>
 	WHERE MEM_ID = #{memId}
 </update>
 <delete id="memDel" parameterType="string">
@@ -33,4 +33,18 @@
 	FROM MEMBER
 	WHERE MEM_ID = #{memId}
 </select>
+<select id="memDelete" parameterType="string">
+	DELETE FROM MEMBER
+	WHERE MEM_ID = #{memId}
+</select>
+<update id="memPwUpdate" parameterType="Model.MemberDTO">
+	UPDATE MEMBER
+	SET MEM_PW = #{memPw}
+	WHERE MEM_ID = #{memId}
+</update>
+<update id="updateCkOk" parameterType="Model.MemberDTO">
+	UPDATE MEMBER
+	SET ckOk = #{ckOk}
+	WHERE MEM_EMAIL = #{memEmail} AND ckOk IS NULL
+</update>
 </mapper>

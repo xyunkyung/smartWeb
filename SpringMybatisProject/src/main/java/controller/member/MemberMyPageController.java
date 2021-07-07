@@ -5,12 +5,20 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import command.MemberCommand;
 import service.member.MemberInfoService;
+import service.member.MemberModifyService;
+import service.member.MemberOutService;
+import service.member.MemberPwConfirmService;
+import service.member.MemberPwUpdateService;
 import service.member.MemberUpdateService;
+import validator.MemberPasswordValidator;
 
 @Controller
 @RequestMapping("edit")
@@ -32,13 +40,67 @@ public class MemberMyPageController {
 	}
 	
 	@RequestMapping("memSujung")
-	public String memSujung(HttpSession session, Model model) {
+	public String memSujung(HttpSession session, Model model, @ModelAttribute MemberCommand memberCommand) {
 		memberInfoService.memInfo(model, session);
 		return "member/memSujung";
 	}
+	
+	@Autowired
+	MemberModifyService memberModifyService;
+	
 	@RequestMapping(value = "memSujungOk", method = RequestMethod.POST)
-	public String memSujungOk(MemberCommand memberCommand) {
-		memberUpdateService.memUpdate(memberCommand);
-		return "member/memDetail";
+	public String memSujungOk(MemberCommand memberCommand, Errors errors, HttpSession session) {
+		memberModifyService.memUpdate(session, memberCommand, errors);
+		
+		if(errors.hasErrors()) {
+			return "member/memSujung";
+		}
+		return "redirect:memDetail";
+	}
+	
+	@RequestMapping("memPwChange")
+	public String memPwChange() {
+		return "member/Pwchange";
+	}
+	
+	@Autowired
+	MemberPwConfirmService memberPwConfirmService;
+	
+	@RequestMapping("pwChangeOk")
+	public String pwChangeOk(@RequestParam(value = "memPw") String memPw, HttpSession session, Model model, @ModelAttribute MemberCommand memberCommand) {
+		String path = memberPwConfirmService.memPw(memPw, session, model);
+		return path;
+	}
+	
+	@Autowired
+	MemberPwUpdateService memberPwUpdateService;
+	
+	@RequestMapping("changePw")
+	public String changePw(MemberCommand memberCommand, Errors errors, HttpSession session) {
+		new MemberPasswordValidator().validate(memberCommand, errors);
+		
+		if(errors.hasErrors()) {
+			return "member/pwChangeOk";
+		}
+		memberPwUpdateService.memPwUpdate(memberCommand, errors, session);
+		
+		if(errors.hasErrors()) {
+			return "member/PwChangeOk";
+		}
+		return "redirect:/";
+	}
+	
+	@RequestMapping("memOut")
+	public String memOut() {
+		return "member/OutPw";
+	}
+	
+	@Autowired
+	MemberOutService memberOutService;
+	
+	@RequestMapping("memOutOk")
+	public String memOutOk(@RequestParam(value = "memPw") String memPw, HttpSession session, Model model) {
+		String path = memberOutService.memDelete(memPw, session, model);
+		return path;
 	}
 }

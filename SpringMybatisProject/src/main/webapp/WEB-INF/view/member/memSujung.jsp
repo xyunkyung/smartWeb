@@ -79,45 +79,56 @@ table{
 </head>
 <body>
 <form:form action="memSujungOk" method="post" name="frm" modelAttribute="memberCommand">
- 	<form:hidden path="memId"/>
- 	<form:hidden path="memName"/>
- 	<input type="hidden" name="memBirth" value="<fmt:formatDate value="${memberCommand.memBirth }" type="date" pattern="yyyy-MM-dd"/>"/>
- 	<form:hidden path="memGender"/>
- 	<table>
+ 	<form:hidden path="memId" />
+	<form:hidden path="memName" />
+	<input type="hidden" name="memBirth" 
+	value="<fmt:formatDate value="${memberCommand.memBirth }" type="date" 
+			pattern="yyyy-MM-dd"/>"/>
+	<form:hidden path="memGender" />
+	<table border = 1 align="center">
 		<tr><td>아이디</td>
-			<td>${memberCommand.memId }</td></tr>
+			<td> ${memberCommand.memId } </td></tr>
 		<tr><td>비밀번호</td>
-			<td><input type="password" name="memPw" size="50" />
-				<span>${pwFail }</span></td></tr>
+			<td>
+				<input type="password" name="memPw" />
+				<form:errors path = "memPw"/>
+			</td></tr>
 		<tr><td>이름</td>
-			<td>${memberCommand.memName }</td></tr>
+			<td> ${memberCommand.memName }  </td></tr>
 		<tr><td>우편번호</td>
-			<td><input type="text" name="postNumber" id="sample4_postcode" value="${memberCommand.postNumber }" size="50" ></td></tr>
+			<td><form:input path="postNumber" id="sample4_postcode" readonly="readonly" /></td></tr>
 		<tr><td>주소</td>
-			<td><input type="text" name="memAddress" id="sample4_roadAddress" value="${memberCommand.memAddress }" size="50">
-				<a href="javascript:sample4_execDaumPostcode();">주소 검색</a></td></tr>
-		<tr><td>상세 주소</td>
-			<td><input type="text" name="detailAdd" value="${memberCommand.detailAdd }" size="50" ></td></tr>
+			<td><form:input path ="memAddress" 
+				id="sample4_roadAddress"  size="30"  readonly="readonly" />
+				<a href="javascript:sample4_execDaumPostcode();">주소 검색</a>
+			</td></tr>
+		<tr><td>상세주소</td>
+			<td><form:input path="detailAdd" /></td></tr>
 		<tr><td>연락처</td>
-			<td><input type="text" name="memPhone" value="${memberCommand.memPhone }" size="50"></td></tr>
+			<td><form:input path="memPhone" /></td></tr>
 		<tr><td>이메일</td>
-			<td><input type="text" name="memEmail" value="${memberCommand.memEmail }" size="50" ></td></tr>
+			<td><form:input path="memEmail" /></td></tr>
 		<tr><td>생년월일</td>
-			<td><fmt:formatDate value="${memberCommand.memBirth }" type="date" pattern="yyyy-MM-dd" /></td></tr>
+			<td>
+		<fmt:formatDate value="${memberCommand.memBirth }" type="date" 
+			pattern="yyyy-MM-dd"/></td></tr>
 		<tr><td>성별</td>
 			<td><c:if test="${memberCommand.memGender == 'M'}">남자</c:if>
-				<c:if test="${memberCommand.memGender == 'F'}">여자</c:if></td></tr>
+				<c:if test="${memberCommand.memGender == 'F'}">여자</c:if>
+			</td></tr>
 		<tr><td>계좌번호</td>
-			<td><input type="text" name="memAccount" value="${memberCommand.memAccount }" size="50" ></td></tr>
-		<tr><td>이메일 수신 여부</td>
-			<td><input type="radio" name="memEmailCk" value="Y" 
-				<c:if test="${memberCommand.memEmailCk == 'Y'}">checked</c:if>>예
+			<td><form:input path="memAccount" /></td></tr>
+		<tr><td>이메일 수신여부</td>
+			<td><input type="radio" name="memEmailCk" value="Y"
+				 	<c:if test="${memberCommand.memEmailCk == 'Y'}">checked</c:if> 
+				 >예			
 				<input type="radio" name="memEmailCk" value="N" 
-				<c:if test="${memberCommand.memEmailCk == 'N'}">checked</c:if>>아니요</td></tr>
-		<tr><td colspan="2">
-		<p>
-			<input type="submit" value="수정" />
-			<input type="button" value="수정 취소" onclick="javjascript:history.back();" />
+					<c:if test="${memberCommand.memEmailCk == 'N'}">checked</c:if> 
+				>아니오</td></tr>
+		<tr><td colspan="2" align="center">
+				<input type="submit" value="수정 완료" />
+				<input type="button"  value="수정 안함" 
+					onclick="javascript:history.back();" />
 			</td></tr>
 	</table>
 </form:form>
